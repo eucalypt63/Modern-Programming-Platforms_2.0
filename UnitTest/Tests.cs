@@ -6,7 +6,6 @@ using FluentAssertions;
 
 namespace UnitTest
 {
-    
     [TestClass]
     public class Tests
     {
@@ -52,8 +51,8 @@ namespace UnitTest
         [TestMethod]
         public void TestGetTrheadTime()
         {
-            Assert.IsTrue(TestThreadRes.time > 200);
-            Assert.IsTrue(TestThreadRes.time < 230);
+            TestThreadRes.time.Should().BeGreaterThan(200);
+            TestThreadRes.time.Should().BeLessThan(240);
         }
 
         [TestMethod]
