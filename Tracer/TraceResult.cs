@@ -1,40 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Lab1.Tracer
 {
     public class TThread
     {
-        public List<ThreadInf> TNodeHead = new List<ThreadInf>();
+        public List<MethodInf> TNodeHead = new List<MethodInf>(); //Лист корневых узлов
         public int id { get; }
         public long time { get; set; }
         public TThread(int id)
         {
             this.id = id;
         }
+        
+        //Получение времени работы потока
         public void getTrheadTime()
         {
             long Ttime = 0;
-            foreach (ThreadInf node in TNodeHead)
+            foreach (MethodInf node in TNodeHead)
             {
                 Ttime += node.ResultTime();
             }
             time = Ttime;
         }
     }
-
     public class TraceResult
     {
         public List<TThread> threads = new List<TThread>();
-        public void getThreadList(List<ThreadInf> nodeList)
+
+        //Получение листа потоков
+        public void getThreadList(List<MethodInf> nodeList)
         {
-            foreach (ThreadInf node in nodeList)
+            foreach (MethodInf node in nodeList)
             {
-                ThreadInf Head = node.GetHead();
+                MethodInf Head = node.GetHead();
                 var targetThread = threads.FirstOrDefault(t => t.id == Head.threadId);
                 if (targetThread != null)
                 {

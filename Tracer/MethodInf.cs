@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using FluentAssertions;
 
 namespace Lab1.Tracer
 {
-    public class ThreadInf
+    public class MethodInf
     {
-        public ThreadInf TParent = null;
-        public List<ThreadInf> TChilds = new List<ThreadInf>();
+        public MethodInf TParent = null;
+        public List<MethodInf> TChilds = new List<MethodInf>();
         public int threadId { get; set; }
         public string methodName { get; set; }
         public string className { get; set; }
         public Stopwatch stopwatch = new Stopwatch();
-
         public bool isActive;
 
-        public ThreadInf(int id, string MethodName, string ClassName)
+        public MethodInf(int id, string MethodName, string ClassName)
         {
             threadId = id;
             methodName = MethodName;
@@ -37,8 +31,8 @@ namespace Lab1.Tracer
         public void StopTimer()
         {
             bool flag = true;
-            ThreadInf curNode = this;
-            foreach (ThreadInf child in curNode.TChilds)
+            MethodInf curNode = this;
+            foreach (MethodInf child in curNode.TChilds)
             {
                 if (child.isActive)
                 {
@@ -61,15 +55,15 @@ namespace Lab1.Tracer
             return stopwatch.ElapsedMilliseconds;
         }
 
-        //Добавления узла при вызове функции внутри функции
-        public void AddNode(ThreadInf node)
+        //Добавления узла
+        public void AddNode(MethodInf node)
         {
-            ThreadInf curNode = this;
+            MethodInf curNode = this;
             bool flag = false;
             while (!flag)
             {
                 flag = true;
-                foreach (ThreadInf child in curNode.TChilds)
+                foreach (MethodInf child in curNode.TChilds)
                 {
                     if (child.isActive)
                     {
@@ -84,9 +78,9 @@ namespace Lab1.Tracer
         }
 
         //Получить корневой узел
-        public ThreadInf GetHead()
+        public MethodInf GetHead()
         {
-            ThreadInf Head = this;
+            MethodInf Head = this;
             while (Head.TParent != null)
             {
                 Head = Head.TParent;

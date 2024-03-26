@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Concurrent;
 using System.Diagnostics;
-using System.Reflection;
 
 
 namespace Lab1.Tracer
 {
     public class TracerImpl : ITracer
     {
-        public List<ThreadInf> threadList = new List<ThreadInf>();
+        public List<MethodInf> methodList = new List<MethodInf>();
 
         public void startTrace()
         {
@@ -27,15 +23,15 @@ namespace Lab1.Tracer
             var callingClassName = callingMethod.DeclaringType.Name;
 
             //Создание класса обрабатываемого метода
-            var newThread = new ThreadInf(threadId, callingMethodName, callingClassName);
+            var newMethod = new MethodInf(threadId, callingMethodName, callingClassName);
 
-            var targetThread = threadList.FirstOrDefault(t => t.threadId == threadId && t.GetHead().isActive == true);
-            if (targetThread != null)
+            var targetMethod = methodList.FirstOrDefault(t => t.threadId == threadId && t.isActive == true);
+            if (targetMethod != null)
             {
-                targetThread.AddNode(newThread);
+                targetMethod.AddNode(newMethod);
             }
-            threadList.Add(newThread);
-            newThread.StartTimer();
+            methodList.Add(newMethod);
+            newMethod.StartTimer();
         }
 
         public void stopTrace()
@@ -43,28 +39,17 @@ namespace Lab1.Tracer
             //Получение id потока
             var threadId = Environment.CurrentManagedThreadId;
 
-            var stackTrace = new StackTrace(); //Получение информации о вызывающем методе
-            var callingMethodName = stackTrace.GetFrame(1).GetMethod().Name; //Получить имя метода
-
-            //Получить имя класса
-            var callingMethod = stackTrace.GetFrame(1).GetMethod();
-            var callingClassName = callingMethod.DeclaringType.Name;
-
             //Поиск обрабатываемого мтеода
-            var targetThread = threadList.FirstOrDefault(t =>
-              t.threadId == threadId &&
-              t.methodName == callingMethodName &&
-              t.className == callingClassName &&
-              t.GetHead().isActive == true);
+            var targetMethod = methodList.FirstOrDefault(t => t.threadId == threadId && t.isActive == true);
 
-            targetThread.StopTimer();
+            targetMethod.StopTimer();
         }
 
         //Доработать клласс и создать функции для вывода результата
         public TraceResult getTraceResult()
         {
             var trace = new TraceResult();
-            trace.getThreadList(threadList);
+            trace.getThreadList(methodList);
             return trace;
         }
     }

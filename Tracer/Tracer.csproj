@@ -55,7 +55,7 @@
     <Compile Include="serializer\ClassSerializer\xmlSerializer.cs" />
     <Compile Include="serializer\ITraceSerializer.cs" />
     <Compile Include="TraceResult.cs" />
-    <Compile Include="ThreadInf.cs" />
+    <Compile Include="MethodInf.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TracerImpl.cs" />
     <Compile Include="TracerInterface.cs" />

@@ -1,10 +1,4 @@
 ﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab1.Tracer.serializer.ClassSerializer
 {
@@ -47,7 +41,7 @@ namespace Lab1.Tracer.serializer.ClassSerializer
             result = result.PadRight(result.Length + 12);
             result += $"\"methods\": [\n";
 
-            foreach (ThreadInf method in trace.TNodeHead)
+            foreach (MethodInf method in trace.TNodeHead)
             {
                 result = result.PadRight(result.Length + 16);
                 result += "{\n";
@@ -65,7 +59,7 @@ namespace Lab1.Tracer.serializer.ClassSerializer
         }
 
         //Добавление метода
-        public string addMethod(ThreadInf method, int step)
+        public string addMethod(MethodInf method, int step)
         {
             string result = "";
 
@@ -81,7 +75,7 @@ namespace Lab1.Tracer.serializer.ClassSerializer
             result = result.PadRight(result.Length + step);
             result += $"\"methods\": [\n";
 
-            foreach (ThreadInf child in method.TChilds)
+            foreach (MethodInf child in method.TChilds)
             {
                 result = result.PadRight(result.Length + step + 4);
                 result += "{\n";

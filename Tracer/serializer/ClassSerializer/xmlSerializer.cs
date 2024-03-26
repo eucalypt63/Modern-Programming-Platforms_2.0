@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab1.Tracer.serializer.ClassSerializer
 {
@@ -31,7 +26,7 @@ namespace Lab1.Tracer.serializer.ClassSerializer
             string result = "";
             result = result.PadRight(result.Length + 4);
             result += $"<thread id=\"{trace.id}\" time=\"{trace.time}ms\">\n";
-            foreach (ThreadInf method in trace.TNodeHead)
+            foreach (MethodInf method in trace.TNodeHead)
                 result += addMethod(method, 8);
 
             result = result.PadRight(result.Length + 4);
@@ -41,7 +36,7 @@ namespace Lab1.Tracer.serializer.ClassSerializer
         }
 
         //Добавление метода
-        public string addMethod(ThreadInf method, int step)
+        public string addMethod(MethodInf method, int step)
         {
             string result = "";
             result = result.PadRight(result.Length + step);
@@ -49,7 +44,7 @@ namespace Lab1.Tracer.serializer.ClassSerializer
             {
                 result += $"<method name=\"{method.methodName}\" time=\"{method.ResultTime()}ms\" class=\"{method.className}\">\n";
 
-                foreach (ThreadInf child in method.TChilds)
+                foreach (MethodInf child in method.TChilds)
                 {
                     result += addMethod(child, step + 4);
                 }

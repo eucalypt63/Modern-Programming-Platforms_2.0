@@ -11,8 +11,8 @@ namespace UnitTest
     public class Tests
     {
         TThread TestThreadRes = new TThread(1);
-        ThreadInf TestMethod1 = new ThreadInf(1, "MethodName1", "ClassName1");
-        ThreadInf TestMethod2 = new ThreadInf(1, "MethodName2", "ClassName2");
+        MethodInf TestMethod1 = new MethodInf(1, "MethodName1", "ClassName1");
+        MethodInf TestMethod2 = new MethodInf(1, "MethodName2", "ClassName2");
 
         [TestMethod]
         [TestInitialize]
@@ -38,15 +38,15 @@ namespace UnitTest
         {
             FuncConsol Function1 = new FuncConsol();
             Function1.Func1();
-            Function1.tracer.threadList.Count.Should().Be(2);
+            Function1.tracer.methodList.Count.Should().Be(2);
 
             FuncConsol Function2 = new FuncConsol();
             Function2.Func2();
-            Function2.tracer.threadList.Count.Should().Be(1);
+            Function2.tracer.methodList.Count.Should().Be(1);
 
             FuncConsol Function3 = new FuncConsol();
             Function3.Func3(2);
-            Function3.tracer.threadList.Count.Should().Be(5);
+            Function3.tracer.methodList.Count.Should().Be(5);
         }
 
         [TestMethod]
@@ -64,9 +64,10 @@ namespace UnitTest
         [TestMethod]
         public void TestGetResult()
         {
-            List<ThreadInf> threadList = new List<ThreadInf>();
-            threadList.Add(TestMethod1);
-            threadList.Add(TestMethod2);
+            List<MethodInf> threadList = new List<MethodInf>{
+                TestMethod1,
+                TestMethod2
+            };
 
             TraceResult result = new TraceResult();
             result.getThreadList(threadList);
