@@ -64,7 +64,7 @@ namespace Lab1.Tracer
         public TraceResult getTraceResult()
         {
             var trace = new TraceResult();
-            trace.getTraceResult(threadList);
+            trace.getThreadList(threadList);
             return trace;
         }
     }

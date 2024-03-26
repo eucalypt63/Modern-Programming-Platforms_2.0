@@ -10,23 +10,28 @@ using System.Xml.Serialization;
 using System.Diagnostics;
 using Lab1.Tracer.serializer.ClassSerializer;
 using LConsole;
+using System.Collections.Concurrent;
+using System.Runtime.InteropServices;
 
 namespace Lab1.LConsol
 {
     public class ConsolApp
     {
         public static FuncConsol func = new FuncConsol();
+        public static ConcurrentDictionary<int, Thread> _thread = new ConcurrentDictionary<int, Thread>();
 
         public static void Main()
         {
             var thread1 = new Thread(func.Func1);
             var thread2 = new Thread(func.Func2);
+            _thread.TryAdd(0, thread1);
+            _thread.TryAdd(1, thread2);
 
-            thread1.Start();
-            thread2.Start();
+            _thread[0].Start();
+            _thread[1].Start();
 
-            thread1.Join();
-            thread2.Join();
+            _thread[0].Join();
+            _thread[1].Join();
 
             func.Func3(4);
             func.Func1();

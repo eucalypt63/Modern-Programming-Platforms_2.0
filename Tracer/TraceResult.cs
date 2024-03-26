@@ -12,12 +12,10 @@ namespace Lab1.Tracer
         public List<ThreadInf> TNodeHead = new List<ThreadInf>();
         public int id { get; }
         public long time { get; set; }
-
         public TThread(int id)
         {
             this.id = id;
         }
-
         public void getTrheadTime()
         {
             long Ttime = 0;
@@ -31,13 +29,13 @@ namespace Lab1.Tracer
 
     public class TraceResult
     {
-        public List<TThread> trace = new List<TThread>();
-        public void getTraceResult(List<ThreadInf> nodeList)
+        public List<TThread> threads = new List<TThread>();
+        public void getThreadList(List<ThreadInf> nodeList)
         {
             foreach (ThreadInf node in nodeList)
             {
                 ThreadInf Head = node.GetHead();
-                var targetThread = trace.FirstOrDefault(t => t.id == Head.threadId);
+                var targetThread = threads.FirstOrDefault(t => t.id == Head.threadId);
                 if (targetThread != null)
                 {
                     if (!targetThread.TNodeHead.Contains(Head))
@@ -47,19 +45,14 @@ namespace Lab1.Tracer
                 {
                     TThread Ttrace = new TThread(Head.threadId);
                     Ttrace.TNodeHead.Add(Head);
-                    trace.Add(Ttrace);
+                    threads.Add(Ttrace);
                 }
             }
 
-            foreach (TThread node in trace)
+            foreach (TThread node in threads)
             {
                 node.getTrheadTime();
             }
         }
-
-
-        // Содержит функции серелизации json
-
-        // Содержит функции серелизации xml
     }
 }

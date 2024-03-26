@@ -15,12 +15,12 @@ namespace Lab1.Tracer.serializer.ClassSerializer
             string result = "";
             result += "{\n    \"threads\": [\n";
 
-            foreach (TThread thred in traceResult.trace)
+            foreach (TThread thread in traceResult.threads)
             {
                 result = result.PadRight(result.Length + 8);
                 result += "{\n";
 
-                result += addThreads(thred);
+                result += addThreads(thread);
 
                 result = result.PadRight(result.Length + 8);
                 result += "},\n";

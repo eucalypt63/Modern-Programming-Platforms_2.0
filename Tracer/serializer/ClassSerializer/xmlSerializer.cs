@@ -14,9 +14,9 @@ namespace Lab1.Tracer.serializer.ClassSerializer
             string result = "";
             result += "<root>\n";
 
-            foreach (TThread thred in traceResult.trace)
+            foreach (TThread thread in traceResult.threads)
             {
-                result += addThreads(thred);
+                result += addThreads(thread);
             }
 
             result += "</root>";

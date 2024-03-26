@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading;
 using LConsole;
 using FluentAssertions;
+using System.Collections.Generic;
 
 namespace UnitTest
 {
@@ -51,14 +52,26 @@ namespace UnitTest
         [TestMethod]
         public void TestGetTrheadTime()
         {
-            TestThreadRes.time.Should().BeGreaterThan(200);
-            TestThreadRes.time.Should().BeLessThan(240);
+            TestThreadRes.time.Should().BeInRange(200, 240);
         }
 
         [TestMethod]
         public void TestGetHead()
         {
             TestMethod2.GetHead().Should().Be(TestMethod1);
+        }
+
+        [TestMethod]
+        public void TestGetResult()
+        {
+            List<ThreadInf> threadList = new List<ThreadInf>();
+            threadList.Add(TestMethod1);
+            threadList.Add(TestMethod2);
+
+            TraceResult result = new TraceResult();
+            result.getThreadList(threadList);
+
+            result.threads.Count.Should().Be(1);
         }
     }
 }
